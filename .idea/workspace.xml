@@ -2,31 +2,59 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/player.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/hapiizland/smallcup/Director.groovy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/GdxEx.groovy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/InputEx.groovy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/hapiizland/smallcup/Main.groovy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SmallCup.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/ant.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/fonts/mplus-1c-black.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/fonts/mplus-1c-bold.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/fonts/mplus-1c-heavy.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/fonts/mplus-1c-light.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/fonts/mplus-1c-medium.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/fonts/mplus-1c-regular.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/fonts/mplus-1c-thin.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/fonts/mplus-2c-regular_0.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/images/player.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/CameraEx.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/Director.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/Entity.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/EntityEx.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/GraphicsEx.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/hapiizland/smallcup/Opening.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/hapiizland/smallcup/Playing.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/TweenEx.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/fonts/mplus-2c-regular.bmfc" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/fonts/mplus-2c-regular.fnt" />
+      <change type="DELETED" beforePath="D:\Dropbox\Documents\workspace\Groovy\SmallCup\data\player.png" afterPath="" />
+      <change type="DELETED" beforePath="D:\Dropbox\Documents\workspace\Groovy\SmallCup\src\net\hapiizland\smallcup\Director.groovy" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/GdxEx.groovy" afterPath="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/GdxEx.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/InputEx.groovy" afterPath="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/InputEx.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/hapiizland/smallcup/Main.groovy" afterPath="$PROJECT_DIR$/src/net/hapiizland/smallcup/Main.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SmallCup.iml" afterPath="$PROJECT_DIR$/SmallCup.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SmallCup.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Main.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361203033367" ignored="false" />
+    <file path="/Main.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361471389739" ignored="false" />
     <file path="/fragment.java" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361198386671" ignored="false" />
-    <file path="/Director.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361204656188" ignored="false" />
-    <file path="/Dummy.txt" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361205410704" ignored="false" />
-    <file path="/InputEx.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361204812670" ignored="false" />
+    <file path="/Director.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361719684024" ignored="false" />
+    <file path="/Dummy.txt" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361722430462" ignored="false" />
+    <file path="/InputEx.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361719764525" ignored="false" />
+    <file path="$PROJECT_DIR$/../Mimei/src/net/hapiizland/mimei/Director.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361207606369" ignored="false" />
+    <file path="$PROJECT_DIR$/../Mimei/src/net/hapiizland/mimei/ScreenDirector.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361207606369" ignored="false" />
+    <file path="$PROJECT_DIR$/../Mimei/src/net/hapiizland/mimei/utils/Color.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361207606369" ignored="false" />
+    <file path="$PROJECT_DIR$/../Mimei/src/net/hapiizland/mimei/Entity.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361207606369" ignored="false" />
+    <file path="$PROJECT_DIR$/../Mimei/src/net/hapiizland/mimei/TweenDirector.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361207606369" ignored="false" />
+    <file path="$PROJECT_DIR$/../Mimei/src/net/hapiizland/mimeisample/Main.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361207606369" ignored="false" />
+    <file path="$PROJECT_DIR$/../Mimei/src/net/hapiizland/mimei/utils/MVec2.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361207606369" ignored="false" />
+    <file path="$PROJECT_DIR$/../Mimei/src/net/hapiizland/mimeisample/FallingBox.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361207606369" ignored="false" />
+    <file path="/Playing.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361721307768" ignored="false" />
+    <file path="/GdxEx.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361715384413" ignored="false" />
+    <file path="/TextureEx.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361431432170" ignored="false" />
+    <file path="/a.dummy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361713938727" ignored="false" />
+    <file path="/GraphicsEx.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361459887490" ignored="false" />
+    <file path="/Splash.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361455234809" ignored="false" />
+    <file path="/Entity.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361722413776" ignored="false" />
+    <file path="/Opening.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361471417175" ignored="false" />
+    <file path="/EntityEx.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361721086453" ignored="false" />
+    <file path="/CameraEx.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361466584718" ignored="false" />
+    <file path="/TweenEx.groovy" changelist="6e2521ea-daf0-437e-9b3f-6c9d2c778ccd" time="1361715635398" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +69,7 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -75,7 +104,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -88,21 +116,19 @@
       <file leaf-file-name="Main.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/hapiizland/smallcup/Main.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="43" selection-start="675" selection-end="675" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#188#225#0" expanded="true" />
-              </folding>
+            <state line="37" column="26" selection-start="1169" selection-end="1169" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Director.groovy" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/net/hapiizland/smallcup/Director.groovy">
+      <file leaf-file-name="Playing.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/hapiizland/smallcup/Playing.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="13" selection-start="83" selection-end="83" vertical-scroll-proportion="0.10344828">
+            <state line="72" column="0" selection-start="2126" selection-end="2126" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="e#187#225#0" expanded="true" />
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#188#226#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -111,10 +137,8 @@
       <file leaf-file-name="GdxEx.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/GdxEx.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="0" selection-start="237" selection-end="237" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state line="41" column="0" selection-start="1178" selection-end="1178" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -122,10 +146,69 @@
       <file leaf-file-name="InputEx.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/InputEx.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="12" selection-start="1308" selection-end="1308" vertical-scroll-proportion="0.0">
+            <state line="25" column="10" selection-start="581" selection-end="581" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#199#226#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EntityEx.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/EntityEx.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="45" column="68" selection-start="1069" selection-end="1069" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Opening.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/hapiizland/smallcup/Opening.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="9" selection-start="829" selection-end="829" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GraphicsEx.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/GraphicsEx.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="49" column="5" selection-start="1295" selection-end="1295" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CameraEx.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/CameraEx.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="5" selection-start="534" selection-end="534" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Entity.groovy" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/Entity.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="384" column="0" selection-start="9543" selection-end="9543" vertical-scroll-proportion="0.2747826">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <element signature="e#199#236#0" expanded="true" />
+                <element signature="e#200#246#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TweenEx.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/TweenEx.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="45" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#200#238#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -141,6 +224,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="androcoffee &lt;AndroCoffee@gmail.com&gt;" />
         <option value="androcoffee" />
         <option value="&lt;AndroCoffee&gt;" />
         <option value="AndroCoffee &lt;androcoffee@gma..." />
@@ -151,6 +235,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitLogSettings">
+    <option name="myStructureFilterPaths" />
     <option name="myDateState">
       <MyDateState />
     </option>
@@ -159,10 +244,20 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/net/hapiizland/scsample/Main.groovy" />
-        <option value="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/GdxEx.groovy" />
-        <option value="$PROJECT_DIR$/src/net/hapiizland/smallcup/Main.groovy" />
+        <option value="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/TextureEx.groovy" />
+        <option value="$PROJECT_DIR$/src/net/hapiizland/smallcup/Splash.groovy" />
+        <option value="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/GraphicsEx.groovy" />
+        <option value="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/CameraEx.groovy" />
         <option value="$PROJECT_DIR$/src/net/hapiizland/smallcup/Director.groovy" />
+        <option value="$PROJECT_DIR$/src/net/hapiizland/smallcup/Opening.groovy" />
+        <option value="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/GdxEx.groovy" />
+        <option value="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/TweenEx.groovy" />
+        <option value="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/Director.groovy" />
         <option value="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/InputEx.groovy" />
+        <option value="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/EntityEx.groovy" />
+        <option value="$PROJECT_DIR$/src/net/hapiizland/smallcup/Main.groovy" />
+        <option value="$PROJECT_DIR$/src/net/hapiizland/smallcup/Playing.groovy" />
+        <option value="$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/Entity.groovy" />
       </list>
     </option>
   </component>
@@ -250,8 +345,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -291,6 +384,62 @@
               <option name="myItemId" value="smallcup" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Playing.groovy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SmallCup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SmallCup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hapiizland" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="smallcup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Opening.groovy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SmallCup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SmallCup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hapiizland" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="smallcup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Main.groovy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -324,12 +473,88 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hapiizland" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gdxex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity.groovy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SmallCup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SmallCup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hapiizland" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gdxex" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Director.groovy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SmallCup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SmallCup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SmallCup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SmallCup" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fonts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -339,9 +564,9 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="MavenSettings" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Java/libs/libgdx-0.9.7/desktop" />
-    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Java/libs/libgdx-0.9.7/Desktop" />
+    <property name="project.structure.side.proportion" value="0.13869464" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
@@ -489,6 +714,11 @@
       <created>1361195832969</created>
       <updated>1361195832969</updated>
     </task>
+    <task id="LOCAL-00001" summary="Initial commit">
+      <created>1361205536912</created>
+      <updated>1361205536912</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -515,21 +745,21 @@
     <frame x="-8" y="22" width="1296" height="1010" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32928178" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31049722" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32923076" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928178" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928178" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32154697" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928178" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24959481" sideWeight="0.67071825" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928178" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22690438" sideWeight="0.6895028" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32486188" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -575,7 +805,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implements entity system, inputs, fonts, screens" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -589,6 +819,7 @@
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="Initial commit" />
+    <MESSAGE value="Implements entity system, inputs, fonts, screens" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -598,32 +829,17 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/smallcup/Main.groovy">
+    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/Director.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="14" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#188#225#0" expanded="true" />
-          </folding>
+        <state line="28" column="0" selection-start="803" selection-end="803" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/GdxEx.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="0" selection-start="237" selection-end="237" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/smallcup/Main.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="43" selection-start="675" selection-end="675" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#188#225#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -631,17 +847,109 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="67" column="12" selection-start="1308" selection-end="1308" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#199#236#0" expanded="true" />
+            <element signature="e#199#226#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/smallcup/Director.groovy">
+    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/smallcup/Main.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="13" selection-start="83" selection-end="83" vertical-scroll-proportion="0.10344828">
+        <state line="10" column="14" selection-start="202" selection-end="202" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../Java/libs/libgdx-0.9.7/desktop/gdx-sources.jar!/com/badlogic/gdx/graphics/OrthographicCamera.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="0" selection-start="1114" selection-end="1114" vertical-scroll-proportion="0.33333334">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/GraphicsEx.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="5" selection-start="1295" selection-end="1295" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/CameraEx.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="5" selection-start="534" selection-end="534" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/TweenEx.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="45" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#187#225#0" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#200#238#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/Director.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="30" selection-start="1434" selection-end="1434" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/GdxEx.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="0" selection-start="1178" selection-end="1178" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/smallcup/Main.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="26" selection-start="1169" selection-end="1169" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/EntityEx.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="68" selection-start="1069" selection-end="1069" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/smallcup/Playing.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="72" column="0" selection-start="2126" selection-end="2126" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#188#226#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/InputEx.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="10" selection-start="581" selection-end="581" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#199#226#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/smallcup/Opening.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="9" selection-start="829" selection-end="829" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/hapiizland/net/hapiizland/gdxex/Entity.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="384" column="0" selection-start="9543" selection-end="9543" vertical-scroll-proportion="0.2747826">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#200#246#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -675,11 +983,11 @@
       </state>
       <state key="GlobalLibrariesConfigurable.UI">
         <settings>
-          <last-edited>libgdx</last-edited>
+          <last-edited>universal-tween-engine</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.13869464" />
               </list>
             </option>
           </splitter-proportions>
@@ -703,7 +1011,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.13869464" />
               </list>
             </option>
           </splitter-proportions>

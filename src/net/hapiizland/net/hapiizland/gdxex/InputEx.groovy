@@ -8,6 +8,8 @@
 
 package net.hapiizland.net.hapiizland.gdxex
 
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.math.Vector2
 import groovy.transform.CompileStatic
 import com.badlogic.gdx.InputProcessor
 
@@ -21,9 +23,28 @@ class InputEx implements InputProcessor {
         keyStates[keycode] && !prevKeyStates[keycode]
     }
 
+    float getMouseX() { Gdx.input.x }
+    float getMouseY() { Gdx.graphics.height - Gdx.input.y }
+
+    Vector2 getMousePos() {
+        new Vector2(mouseX, mouseY)
+    }
+
+    boolean isMousePressed(int button) {
+        mouseStates[button]
+    }
+
+    boolean isMouseDown(int button) {
+        mouseStates[button] && !prevMouseStates[button]
+    }
+
     void update() {
         keyStates.each { int keycode, boolean state ->
             prevKeyStates[keycode] = state
+        }
+
+        mouseStates.each { int button, boolean state ->
+            prevMouseStates[button] = state
         }
     }
 
@@ -51,11 +72,13 @@ class InputEx implements InputProcessor {
 
     @Override
     boolean touchDown (int x, int y, int pointer, int button) {
+        mouseStates[button] = true
         false
     }
 
     @Override
     boolean touchUp (int x, int y, int pointer, int button) {
+        mouseStates[button] = false
         false
     }
 
@@ -76,5 +99,7 @@ class InputEx implements InputProcessor {
 
     Map<Integer, Boolean> keyStates = [:]
     Map<Integer, Boolean> prevKeyStates = [:]
+    Map<Integer, Boolean> mouseStates = [:]
+    Map<Integer, Boolean> prevMouseStates = [:]
 }
 
