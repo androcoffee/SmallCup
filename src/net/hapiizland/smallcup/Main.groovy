@@ -18,9 +18,13 @@ import net.hapiizland.net.hapiizland.gdxex.IDirectorScheme
 @CompileStatic
 class DirectorScheme implements IDirectorScheme {
     void initialize(Director d) {
-        GdxEx.graphicsEx.imagePath = "data/images/"
         GdxEx.graphicsEx.fontPath = "data/fonts/"
         GdxEx.graphicsEx.loadFont("mplus-2c-regular.fnt")
+
+        GdxEx.graphicsEx.imagePath = "data/images/"
+        ["player.png", "bullet.png"].each { String name ->
+            GdxEx.graphicsEx.loadTexture(name)
+        }
 
         d.registerScreen("Opening", new Opening())
         d.registerScreen("Playing", new Playing())

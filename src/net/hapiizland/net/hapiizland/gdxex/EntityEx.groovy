@@ -36,15 +36,24 @@ class EntityEx {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         def batch = GdxEx.graphicsEx.batch
-        batch.projectionMatrix = GdxEx.cameraEx.camera.combined
         batch.begin()
-        entities.each { Entity e -> e.draw() }
+        batch.projectionMatrix = GdxEx.cameraEx.camera.combined
+        entities.each { Entity e ->
+            if (e.isFollowingCamera()) {
+                batch.projectionMatrix = GdxEx.cameraEx.uiCamera.combined
+                e.draw()
+                batch.projectionMatrix = GdxEx.cameraEx.camera.combined
+            } else {
+                e.draw()
+            }
+        }
         batch.end()
     }
 
     private void removeDoneEntities() {
         entities = entities.findAll { Entity e -> !e.done }.toList()
     }
+
     private void addNewEntities() {
         entities += newEntities
         newEntities.clear()

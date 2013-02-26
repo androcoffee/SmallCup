@@ -8,6 +8,7 @@
 
 package net.hapiizland.net.hapiizland.gdxex
 
+import com.badlogic.gdx.math.Vector2
 import groovy.transform.CompileStatic
 import com.badlogic.gdx.Gdx
 
@@ -55,5 +56,12 @@ class GdxEx {
 
     static void dispose() {
         graphicsEx.dispose()
+    }
+}
+
+@CompileStatic
+class Vector2Ex {
+    static float calcDegrees(Vector2 from, Vector2 to) {
+        to.cpy().sub(from).angle()
     }
 }

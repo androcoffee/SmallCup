@@ -36,6 +36,11 @@ interface IEntity {
 interface ILivingScheme {
     int getHp()
     void setHp(int hp)
+
+    void setLastStand(int lastStand)
+
+    void setupLivingScheme(Entity e)
+    void updateLivingScheme(Entity e)
 }
 
 @CompileStatic
@@ -58,6 +63,11 @@ interface IMovingScheme {
 
 @CompileStatic
 interface IDrawingScheme {
+    boolean isFollowingCamera()
+    boolean getFollowingCamera()
+    void setFollowingCamera(boolean followingCamera)
+
+    boolean isVisible()
     boolean getVisible()
     void setVisible(boolean visible)
 
@@ -69,8 +79,8 @@ interface IDrawingScheme {
     void setScale(float scale)
     Color getColor()
     void setColor(Color color)
-    float getDegrees()
-    void setDegrees(float degrees)
+    float getDrawingDegrees()
+    void setDrawingDegrees(float degrees)
 
     void setupDrawingScheme(Entity e)
     void updateDrawingScheme(Entity e)
@@ -87,6 +97,10 @@ class Entity implements IEntity {
     void setPos(Vector2 p) { pos.set(p) }
 
     @Delegate ILivingScheme livingScheme = null
+    void setLivingScheme(ILivingScheme livingScheme) {
+        this.livingScheme = livingScheme
+        this.livingScheme.setupLivingScheme(this)
+    }
 
     @Delegate IMovingScheme movingScheme = null
     void setMovingScheme(IMovingScheme movingScheme) {
@@ -115,6 +129,7 @@ class Entity implements IEntity {
 
     final void update() {
         schemes.each { EntityScheme s -> s.updateScheme(this) }
+        if (livingScheme) updateLivingScheme(this)
         if (movingScheme) updateMovingScheme(this)
         if (drawingScheme) updateDrawingScheme(this)
         subDrawingSchemes.each { IDrawingScheme s -> s.updateDrawingScheme(this) }
@@ -146,6 +161,10 @@ class LivingScheme implements ILivingScheme {
         onDying = c
     }
 
+    void setOnDead(Closure c) {
+        onDead = c
+    }
+
     LivingScheme(int hp) {
         this.hp = hp
     }
@@ -163,12 +182,14 @@ class LivingScheme implements ILivingScheme {
             lastStand--;
             if (onDying) onDying();
         } else if (lastStand == 0) {
+            if (onDead) onDead()
             e.done = true
         }
     }
 
     private Closure onKilled = null
     private Closure onDying = null
+    private Closure onDead = null
 }
 
 @CompileStatic
@@ -220,6 +241,7 @@ class VAMovingScheme implements IMovingScheme {
 @CompileStatic
 abstract class DrawingScheme implements IDrawingScheme {
     boolean visible = true
+    boolean followingCamera = false
 
     abstract void onSetupDrawingScheme(Entity e)
     abstract void onUpdateDrawingScheme(Entity e)
@@ -266,11 +288,11 @@ class SpriteDrawingScheme extends DrawingScheme {
         sprite.setPosition(pos.x, pos.y)
     }
 
-    float getDegrees() {
+    float getDrawingDegrees() {
         sprite.rotation
     }
 
-    void setDegrees(float degrees) {
+    void setDrawingDegrees(float degrees) {
         sprite.rotation = degrees
     }
 
@@ -325,8 +347,8 @@ class FontDrawingScheme extends DrawingScheme {
         fontDrawingScheme
     }
 
-    float getDegrees() { 0.0f }
-    void setDegrees(float degrees) {}
+    float getDrawingDegrees() { 0.0f }
+    void setDrawingDegrees(float degrees) {}
 }
 
 @CompileStatic

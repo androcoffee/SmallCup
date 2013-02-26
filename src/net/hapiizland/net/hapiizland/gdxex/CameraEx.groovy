@@ -15,9 +15,20 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class CameraEx {
     @Delegate OrthographicCamera camera
+    OrthographicCamera getUiCamera() { uiCamera }
 
     CameraEx() {
         camera = new OrthographicCamera()
         camera.setToOrtho(false, Gdx.graphics.width, Gdx.graphics.height)
+
+        uiCamera = new OrthographicCamera()
+        uiCamera.setToOrtho(false, Gdx.graphics.width, Gdx.graphics.height)
     }
+
+    void update() {
+        camera.update()
+        uiCamera.update()
+    }
+
+    private OrthographicCamera uiCamera
 }

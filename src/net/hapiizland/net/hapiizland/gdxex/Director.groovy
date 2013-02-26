@@ -25,6 +25,9 @@ class Director extends Game {
     Map<String, Screen> screens = [:]
     private void setScreens(Map<String, Screen> map) {}
 
+    long elapsedFrames = 0
+    private void setElapsedFrames(int v) { elapsedFrames = v }
+
     Director(IDirectorScheme directorScheme) {
         this.directorScheme = directorScheme
     }
@@ -50,6 +53,7 @@ class Director extends Game {
     }
 
     void update() {
+        elapsedFrames++
         GdxEx.update()
 
         if (GdxEx.inputEx.isKeyDown(Input.Keys.ESCAPE)) {
