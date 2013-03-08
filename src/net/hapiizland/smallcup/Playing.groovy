@@ -8,33 +8,33 @@
 
 package net.hapiizland.smallcup
 
-import aurelienribon.tweenengine.BaseTween
-import aurelienribon.tweenengine.Timeline
 import aurelienribon.tweenengine.Tween
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.math.Vector3
 import groovy.transform.CompileStatic
-import net.hapiizland.net.hapiizland.gdxex.Director
-import net.hapiizland.net.hapiizland.gdxex.DrawingScheme
 import net.hapiizland.net.hapiizland.gdxex.Entity
 import net.hapiizland.net.hapiizland.gdxex.EntityScheme
 import net.hapiizland.net.hapiizland.gdxex.FontDrawingScheme
 import net.hapiizland.net.hapiizland.gdxex.GdxEx
-import net.hapiizland.net.hapiizland.gdxex.IDrawingScheme
 import net.hapiizland.net.hapiizland.gdxex.LivingScheme
+import net.hapiizland.net.hapiizland.gdxex.PhysicalMovingScheme
+import net.hapiizland.net.hapiizland.gdxex.PhysicsEx
 import net.hapiizland.net.hapiizland.gdxex.SpriteDrawingScheme
-import net.hapiizland.net.hapiizland.gdxex.TweenEx
 import net.hapiizland.net.hapiizland.gdxex.VAMovingScheme
 import net.hapiizland.net.hapiizland.gdxex.Vector2Ex
+
 import net.hapiizland.smallcup.entities.Bullet
+import org.jbox2d.collision.shapes.PolygonShape
+import org.jbox2d.dynamics.Body
+import org.jbox2d.dynamics.BodyDef
+import org.jbox2d.dynamics.BodyType
+import org.jbox2d.dynamics.FixtureDef
 
 @CompileStatic
 class Playing implements Screen {
@@ -43,7 +43,9 @@ class Playing implements Screen {
 
     @Override
     void show() {
-        def player = Player.createPlayer(new Vector2(100, 500))
+        GdxEx.stageEx.loadStage("Tutorial.oel")
+
+        def player = Player.createPlayer(new Vector2(160, 860))
         GdxEx.entityEx.addEntity(player)
         GdxEx.entityEx.addEntity(Player.createPlayerInfo(player))
 
@@ -79,129 +81,145 @@ class Playing implements Screen {
     //private Stage stage
 }
 
-/*@CompileStatic
-class DrawOptions {
-    final DrawOptions plus(DrawOptions options) {
-        new DrawOptions(batch: options.batch ?: batch)
-    }
-
-    final void leftShift(DrawOptions options) {
-        batch = options.batch ?: batch
-    }
-}*/
-
-@CompileStatic
-class DebugInfo {
-    static Entity createDebugInfo() {
-        def entity = new Entity()
-        entity.pos.x = 0
-        entity.pos.y = Gdx.graphics.height - 32
-
-        def fontDrawingScheme = new FontDrawingScheme(GdxEx.graphicsEx.getFont("mplus-2c-regular.fnt"))
-        entity.drawingScheme = fontDrawingScheme
-        entity.followingCamera = true
-
-        entity.addScheme(new EntityScheme() {
-            @Override
-            void setupScheme(Entity e) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            void updateScheme(Entity e) {
-                //To change body of implemented methods use File | Settings | File Templates.
-                fontDrawingScheme.text = "FPS = ${Gdx.graphics.framesPerSecond}\nEntities = ${GdxEx.entityEx.entitiesIter.size()}"
-            }
-        })
-
-        entity
-    }
-}
 
 @CompileStatic
 class Player {
     static Entity createPlayer(Vector2 pos) {
         Texture texture = GdxEx.graphicsEx.getTexture("player.png")
-        Entity player = new Entity()
+        Entity player = new Entity(pos, Attributes.PLAYER)
 
-        player.pos.x = pos.x
-        player.pos.y = pos.y
+        player.livingScheme = new LivingScheme(10) {
+            @Override
+            void onKilled(Entity e) {
+                player.lastStand = 60
+                Tween.to(player, Entity.SCALE, 1.0f).target(0.0f).start(GdxEx.tweenEx.manager)
+            }
 
-        def livingScheme = new LivingScheme(1)
-        livingScheme.onKilled = {->
-            player.lastStand = 60
-            Tween.to(player, Entity.SCALE, 1.0f).target(0.0f).start(GdxEx.tweenEx.manager)
+            @Override void onDying(Entity e) {}
+            @Override void onDead(Entity e) {}
         }
-        player.livingScheme = livingScheme
 
         def drawingScheme = new SpriteDrawingScheme(new Sprite(texture, 0, 0, 32, 32))
         player.drawingScheme = drawingScheme
+        player.z = -0.1f
 
         def afterGrow = DigitAfterGrowDrawingScheme.createInstance(
-                scheme: drawingScheme, num: 5, period: 10, alphaScaling: true, sizeScaling: true)
-        //def afterGrow = new AfterGrowDrawingScheme(drawingScheme, 5, 20, true, true)
+                scheme: drawingScheme, num: 5, period: 10, alphaScaling: true, sizeScaling: false)
         player.addSubDrawingScheme(afterGrow)
 
-        player.movingScheme = new VAMovingScheme()
+        BodyDef bodyDef = new BodyDef()
+        bodyDef.position.set(PhysicsEx.p2m(pos))
+        bodyDef.type = BodyType.DYNAMIC
+        bodyDef.fixedRotation = true
+
+        Body body = GdxEx.physicsEx.createBody(bodyDef)
+        FixtureDef fixtureDef = new FixtureDef()
+        PolygonShape shape = new PolygonShape()
+        shape.setAsBox(PhysicsEx.p2m(28.0f / 2), PhysicsEx.p2m(28.0f / 2))
+        fixtureDef.shape = shape
+        fixtureDef.density = 1.0f
+        fixtureDef.friction = 0.4f
+        body.createFixture(fixtureDef)
+
+        player.movingScheme = new PhysicalMovingScheme(body)
 
         player.addScheme(new EntityScheme() {
+            boolean doubleJumped = false
+
             @Override
             void setupScheme(Entity e) {
             }
 
             @Override
             void updateScheme(Entity e) {
-                e.drawingDegrees += 1.0f
-                //To change body of implemented methods use File | Settings | File Templates.
-                if (GdxEx.inputEx.isKeyPressed(Input.Keys.LEFT)) {
-                    e.acc.x -= 0.1f
+                //e.drawingDegrees += 1.0f
+
+                if (GdxEx.inputEx.isKeyPressed(Input.Keys.LEFT) && e.velX > -300.0f) {
+                    if (e.onGround) {
+                        e.applyForce(new Vector2(-300.0f, 0.0f))
+                    } else {
+                        e.applyForce(new Vector2(-150.0f, 0.0f))
+                    }
                 }
-                if (GdxEx.inputEx.isKeyPressed(Input.Keys.RIGHT)) {
-                    e.acc.x += 0.1f
-                }
-                if (GdxEx.inputEx.isKeyPressed(Input.Keys.DOWN)) {
-                    e.acc.y -= 0.1f
-                }
-                if (GdxEx.inputEx.isKeyPressed(Input.Keys.UP)) {
-                    e.acc.y += 0.1f
+                if (GdxEx.inputEx.isKeyPressed(Input.Keys.RIGHT) && e.velX < 300.0f) {
+                    if (e.onGround) {
+                        e.applyForce(new Vector2(300.0f, 0.0f))
+                    } else {
+                        e.applyForce(new Vector2(150.0f, 0.0f))
+                    }
                 }
 
-                if (GdxEx.inputEx.isKeyPressed(Input.Keys.Z)) {
-                    //GdxEx.cameraEx.camera.zoom += 0.1f
+                if (GdxEx.inputEx.isKeyDown(Input.Keys.Z)) {
+                    if (e.onGround) {
+                        e.velY = 200.0f
+                    } else if (e.onRightWall && GdxEx.inputEx.isKeyPressed(Input.Keys.RIGHT)) {
+                        e.vel = new Vector2(-200.0f, 200.0f)
+                    } else if (e.onLeftWall && GdxEx.inputEx.isKeyPressed(Input.Keys.LEFT)) {
+                        e.vel = new Vector2(200.0f, 200.0f)
+                    } else if (!this.doubleJumped) {
+                        e.speed = 400.0f
+                        e.velDegrees = this.keyToDegrees()
+                        this.doubleJumped = true
+                    }
+                }
+
+                if (e.onGround) this.doubleJumped = false
+
+                if (GdxEx.inputEx.isKeyPressed(Input.Keys.I)) {
+                    e.scale = e.scaleX + 0.1f
                 } else if (GdxEx.inputEx.isKeyPressed(Input.Keys.O)) {
-                    //GdxEx.cameraEx.camera.zoom -= 0.1f
+                    e.scale = e.scaleX - 0.1f
                 }
 
                 if (GdxEx.inputEx.isMouseDown(Input.Buttons.LEFT)) {
-                    (0..<100).each { int i ->
+                    (0..<10).each { int i ->
+                        float spd = 1.0f + i / 10.0f as float
+                        def velDegrees =
+                            Vector2Ex.calcDegrees(e.pos, GdxEx.cameraEx.calcPosOnWorld(GdxEx.inputEx.mousePos)) + MathUtils.random(-30, 30)
                         GdxEx.entityEx.addEntity(
                                 Bullet.createBullet(e.pos, [
-                                        speed: 7.0f,
-                                        velDegrees: 360 / 100.0f * i as float,
-                                        color: new Color(0.9f, 0.3f, 0.7f, 1.0f),
+                                        speed: spd,
+                                        velDegrees: velDegrees,
+                                        color: new Color(0.2f, 0.8f, 0.7f, 1.0f),
                                         imageNo: 6,
                                         scheme: new EntityScheme() {
                                             @Override void setupScheme(Entity b) {
-                                                Timeline.createSequence()
-                                                        .pushPause(0.1f)
-                                                        .push(TweenEx.lambdaCallback { int type, BaseTween tween ->
-                                                    Tween.to(b, Entity.VELDEGREES, 1.0f).target(new Vector2().sub(b.pos).angle()).start(GdxEx.tweenEx.manager)
-                                                }).start(GdxEx.tweenEx.manager)
+                                                //Tween.to(b, Entity.SPEED, 2.0f).target(0.0f).start(GdxEx.tweenEx.manager)
+                                                //TweenEx.call { b.hp = 0 }.delay(1.0f as float).start(GdxEx.tweenEx.manager)
+                                                //Bullet.aimingTo(b, {-> GdxEx.inputEx.mousePosOnWorld }, 100)
+                                                //Tween.to(b, Entity.SPEED, 2.0f).target(i * 2).start(GdxEx.tweenEx.manager)
                                             }
-                                            @Override void updateScheme(Entity b) {}
+
+                                            @Override void updateScheme(Entity b) {
+                                            }
                                         }
                                 ]))
                     }
                 }
 
-                if (e.pos.x < 0 || e.pos.x > Gdx.graphics.width || e.pos.y < 0 || e.pos.y > Gdx.graphics.height) {
-                    //e.hp = 0
-                }
-                //GdxEx.cameraEx.camera.position.set(new Vector3(e.pos.x, e.pos.y, GdxEx.cameraEx.camera.position.z))
-                GdxEx.cameraEx.camera.position.x = e.pos.x
-                GdxEx.cameraEx.camera.position.y = e.pos.y
+                Vector2 cameraTarget = GdxEx.stageEx.limitCamera(e.pos)
+                GdxEx.cameraEx.camera.position.x = cameraTarget.x
+                GdxEx.cameraEx.camera.position.y = cameraTarget.y
+            }
 
-                //e.acc.y -= 0.1f
+            private float keyToDegrees() {
+                Vector2 v = new Vector2(0, 0)
+
+                if (GdxEx.inputEx.isKeyPressed(Input.Keys.RIGHT)) {
+                    v.x = 1.0f
+                } else if (GdxEx.inputEx.isKeyPressed(Input.Keys.LEFT)) {
+                    v.x = -1.0f
+                } else {
+                    v.y = 1.0f
+                }
+
+                if (GdxEx.inputEx.isKeyPressed(Input.Keys.UP)) {
+                    v.y = 1.0f
+                } else if (GdxEx.inputEx.isKeyPressed(Input.Keys.DOWN)) {
+                    v.y = -1.0f
+                }
+
+                v.angle()
             }
         })
 
@@ -209,25 +227,24 @@ class Player {
     }
 
     static Entity createPlayerInfo(Entity player) {
-        def playerInfo = new Entity()
-        playerInfo.pos.x = 0
-        playerInfo.pos.y = Gdx.graphics.height
+        def playerInfo = new Entity(new Vector2(0, Gdx.graphics.height), Attributes.NO_HIT)
 
         def fontDrawingScheme = new FontDrawingScheme(GdxEx.graphicsEx.getFont("mplus-2c-regular.fnt"))
-        fontDrawingScheme.text = "pos = ${(int)player.pos.x}, ${(int)player.pos.y}"
+        fontDrawingScheme.text = "pos = ${(int)player.posX}, ${(int)player.posY}"
+        fontDrawingScheme.setColor(new Color(1.0f, 0.0f, 1.0f, 1.0f))
         playerInfo.drawingScheme = fontDrawingScheme
         playerInfo.followingCamera = true
 
         playerInfo.addScheme(new EntityScheme() {
             @Override
             void setupScheme(Entity e) {
-
             }
 
             @Override
             void updateScheme(Entity e) {
-                //To change body of implemented methods use File | Settings | File Templates.
-                fontDrawingScheme.text = "pos = ${(int)player.pos.x}, ${(int)player.pos.y}"
+                fontDrawingScheme.text = "pos = ${(int)player.posX}, ${(int)player.posY}\n" +
+                        "G = ${player.onGround}, C = ${player.onCeiling}," +
+                        "R = ${player.onRightWall}, L = ${player.onLeftWall}"
             }
         })
 
@@ -236,126 +253,33 @@ class Player {
 }
 
 @CompileStatic
-class AfterGrowDrawingScheme extends DrawingScheme {
-    @Delegate IDrawingScheme scheme
+class DebugInfo {
+    static Entity createDebugInfo() {
+        def entity = new Entity(new Vector2(0, Gdx.graphics.height - 64), Attributes.NO_HIT)
 
-    final static AfterGrowDrawingScheme createInstance(Map kwargs) {
-        new AfterGrowDrawingScheme(
-                kwargs.scheme as IDrawingScheme,
-                kwargs.num as int,
-                kwargs.period as int,
-                kwargs.alphaScaling as boolean,
-                kwargs.sizeScaling as boolean)
-    }
+        def fontDrawingScheme = new FontDrawingScheme(GdxEx.graphicsEx.getFont("mplus-2c-regular.fnt"))
+        entity.drawingScheme = fontDrawingScheme
+        entity.followingCamera = true
+        entity.z = 1.0f
 
-    AfterGrowDrawingScheme(IDrawingScheme scheme, int num, int period, boolean alphaScaling, boolean sizeScaling) {
-        this.scheme = scheme
-        this.num = num
-        this.period = period
-        this.alphaScaling = alphaScaling
-        this.sizeScaling = sizeScaling
-
-        int total = num * period
-        prevDrawingSchemes = [scheme.cpy()] * total
-    }
-
-    @Override
-    void onSetupDrawingScheme(Entity e) {
-    }
-
-    @Override
-    void onUpdateDrawingScheme(Entity e) {
-        def cpyScheme = scheme.cpy()
-        prevDrawingSchemes.add(0, cpyScheme)
-        prevDrawingSchemes.pop()
-
-        def total = num * period
-
-        prevDrawingSchemes.each { IDrawingScheme s ->
-            if (alphaScaling) s.color = new Color(s.color.r, s.color.g, s.color.b, s.color.a - (e.color.a - 0.3f) / total as float)
-            if (sizeScaling) {
-                s.setScale(Math.max(s.scaleX - e.scaleX / total, 0.0) as float, Math.max(s.scaleY - e.scaleY / total, 0.0) as float)
-            }}
-    }
-
-    @Override
-    void onDrawDrawingScheme(Entity e) {
-        prevDrawingSchemes.reverse().eachWithIndex { IDrawingScheme s, int i ->
-            if (i % period == 0) {
-                s.drawDrawingScheme(e)
+        entity.addScheme(new EntityScheme() {
+            @Override
+            void setupScheme(Entity e) {
             }
-        }
-    }
 
-    IDrawingScheme createCopiedScheme() {
-        null
-    }
+            @Override
+            void updateScheme(Entity e) {
+                def mouseWorldPos = GdxEx.cameraEx.calcPosOnWorld(GdxEx.inputEx.mousePos)
 
-    private List<IDrawingScheme> prevDrawingSchemes = []
-    int num
-    int period
-    boolean alphaScaling
-    boolean sizeScaling
-}
-
-@CompileStatic
-class DigitAfterGrowDrawingScheme extends DrawingScheme {
-    @Delegate IDrawingScheme scheme
-
-    final static DigitAfterGrowDrawingScheme createInstance(Map kwargs) {
-        new DigitAfterGrowDrawingScheme(
-                kwargs.scheme as IDrawingScheme,
-                kwargs.num as int,
-                kwargs.period as int,
-                kwargs.alphaScaling as boolean,
-                kwargs.sizeScaling as boolean)
-    }
-
-    DigitAfterGrowDrawingScheme(IDrawingScheme scheme, int num, int period, boolean alphaScaling, boolean sizeScaling) {
-        this.scheme = scheme
-        this.num = num
-        this.period = period
-        this.alphaScaling = alphaScaling
-        this.sizeScaling = sizeScaling
-
-        prevDrawingSchemes = [scheme.cpy()] * num
-    }
-
-    @Override
-    void onSetupDrawingScheme(Entity e) {
-    }
-
-    @Override
-    void onUpdateDrawingScheme(Entity e) {
-        if (GdxEx.director.elapsedFrames % period == 0) {
-            def cpyScheme = scheme.cpy()
-            prevDrawingSchemes.add(0, cpyScheme)
-            prevDrawingSchemes.pop()
-        }
-        def total = num * period
-
-        prevDrawingSchemes.each { IDrawingScheme s ->
-            if (alphaScaling) s.color = new Color(s.color.r, s.color.g, s.color.b, s.color.a - (e.color.a - 0.3f) / total as float)
-            if (sizeScaling) {
-                s.setScale(Math.max(s.scaleX - e.scaleX / total, 0.0) as float, Math.max(s.scaleY - e.scaleY / total, 0.0) as float)
+                fontDrawingScheme.text = "FPS = ${GdxEx.director.fps as int}\n" +
+                        "Entities = ${GdxEx.entityEx.entities.size()}\n" +
+                        "MousePos = ${GdxEx.inputEx.mousePos.x as int}, ${GdxEx.inputEx.mousePos.y as int}\n" +
+                        "MousePos(World) = ${mouseWorldPos.x as int}, ${mouseWorldPos.y as int}\n" +
+                        "CameraPos = ${GdxEx.cameraEx.pos.x as int}, ${GdxEx.cameraEx.pos.y as int}\n" +
+                        "Bodies = ${GdxEx.physicsEx.bodyCount}"
             }
-        }
-    }
+        })
 
-    @Override
-    void onDrawDrawingScheme(Entity e) {
-        prevDrawingSchemes.reverse().eachWithIndex { IDrawingScheme s, int i ->
-            s.drawDrawingScheme(e)
-        }
+        entity
     }
-
-    IDrawingScheme createCopiedScheme() {
-        null
-    }
-
-    private List<IDrawingScheme> prevDrawingSchemes = []
-    int num
-    int period
-    boolean alphaScaling
-    boolean sizeScaling
 }

@@ -9,28 +9,35 @@
 package net.hapiizland.net.hapiizland.gdxex
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import groovy.transform.CompileStatic
 
 @CompileStatic
+interface IGraphicsScheme {
+    String getTexturePath()
+    String getFontPath()
+}
+
+@CompileStatic
 class GraphicsEx {
     SpriteBatch batch = new SpriteBatch()
-    Map<String, BitmapFont> fonts = [:]
-    Map<String, Texture> textures = [:]
 
-    private setFonts(Map<String, BitmapFont> map) {}
-    private setTextures(Map<String, Texture> map) {}
-
-    String imagePath = ""
-    void setImagePath(String path) {
-        imagePath = formatPath(path)
+    String texturePath = ""
+    void setTexturePath(String path) {
+        texturePath = formatPath(path)
     }
 
     String fontPath = ""
     void setFontPath(String path) {
         fontPath = formatPath(path)
+    }
+
+    GraphicsEx(IGraphicsScheme scheme) {
+        texturePath = scheme.texturePath
+        fontPath = scheme.fontPath
     }
 
     void loadFont(String filename) {
@@ -42,11 +49,22 @@ class GraphicsEx {
     }
 
     void loadTexture(String filename) {
-        textures[filename] = new Texture(Gdx.files.internal(imagePath + filename))
+        textures[filename] = new Texture(Gdx.files.internal(texturePath + filename))
     }
 
     Texture getTexture(String filename) {
         textures[filename]
+    }
+
+    void beginDrawing() {
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+
+        batch.begin()
+        batch.projectionMatrix = GdxEx.cameraEx.camera.combined
+    }
+
+    void endDrawing() {
+        batch.end()
     }
 
     void dispose() {
@@ -54,6 +72,9 @@ class GraphicsEx {
         fonts.values().each { BitmapFont font -> font.dispose() }
         batch.dispose()
     }
+
+    private Map<String, BitmapFont> fonts = [:]
+    private Map<String, Texture> textures = [:]
 
     static private formatPath(String path) {
         path.endsWith("/") ? path : path + "/"

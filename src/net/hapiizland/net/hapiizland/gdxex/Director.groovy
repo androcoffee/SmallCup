@@ -18,6 +18,9 @@ import groovy.transform.CompileStatic
 @CompileStatic
 interface IDirectorScheme {
     void initialize(Director d)
+    IGraphicsScheme createGraphicsScheme()
+    IStageScheme createStageScheme()
+    IPhycsScheme createPhysicsScheme()
 }
 
 @CompileStatic
@@ -40,9 +43,15 @@ class Director extends Game {
         this.screen = screens[name]
     }
 
+    int getFps() { Gdx.graphics.framesPerSecond }
+    float getSpf() { 1.0f / this.fps }
+
+    int getFps60() { 60 }
+    float getSpf60() { 0.01666666f }
+
     @Override
     void create() {
-        GdxEx.initialize(this)
+        GdxEx.initialize(this, directorScheme)
 
         directorScheme.initialize(this)
     }

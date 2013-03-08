@@ -30,6 +30,10 @@ class InputEx implements InputProcessor {
         new Vector2(mouseX, mouseY)
     }
 
+    Vector2 getMousePosOnWorld() {
+        GdxEx.cameraEx.calcPosOnWorld(mousePos)
+    }
+
     boolean isMousePressed(int button) {
         mouseStates[button]
     }

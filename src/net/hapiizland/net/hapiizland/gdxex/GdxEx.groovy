@@ -29,17 +29,25 @@ class GdxEx {
     static TweenEx tweenEx
     private static TweenEx setTweenEx(TweenEx tex) { tweenEx = tex }
 
+    static StageEx stageEx
+    private static StageEx setStageEx(StageEx sex) { stageEx = sex }
+
+    static PhysicsEx physicsEx
+    private static PhysicsEx setPhysicsEx(PhysicsEx pex) { physicsEx = pex }
+
     static Director director
     private static Director setDirector(Director d) { director = d }
 
-    static void initialize(Director director) {
+    static void initialize(Director director, IDirectorScheme dScheme) {
         inputEx = new InputEx()
         Gdx.input.setInputProcessor(this.inputEx)
 
-        graphicsEx = new GraphicsEx()
+        graphicsEx = new GraphicsEx(dScheme.createGraphicsScheme())
         entityEx = new EntityEx()
         cameraEx = new CameraEx()
         tweenEx = new TweenEx()
+        stageEx = new StageEx(dScheme.createStageScheme())
+        physicsEx = new PhysicsEx(dScheme.createPhysicsScheme())
 
         this.director = director
     }
@@ -47,15 +55,19 @@ class GdxEx {
     static void update() {
         cameraEx.update()
         entityEx.update()
-        tweenEx.update(1.0f / 60.0f as float)
+        tweenEx.update(GdxEx.director.spf60)
+        physicsEx.update()
     }
 
     static void draw() {
+        graphicsEx.beginDrawing()
         entityEx.draw()
+        graphicsEx.endDrawing()
     }
 
     static void dispose() {
         graphicsEx.dispose()
+        physicsEx.dispose()
     }
 }
 

@@ -13,7 +13,6 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.math.Vector2
 import groovy.transform.CompileStatic
-import net.hapiizland.net.hapiizland.gdxex.Director
 import net.hapiizland.net.hapiizland.gdxex.Entity
 import net.hapiizland.net.hapiizland.gdxex.FontDrawingScheme
 import net.hapiizland.net.hapiizland.gdxex.GdxEx
@@ -50,10 +49,10 @@ class Opening implements Screen {
     @Override void dispose() {}
 }
 
+@CompileStatic
 class TitleText {
     static Entity createTitleText() {
-        def entity = new Entity()
-        entity.pos = new Vector2(100, Gdx.graphics.height - 100)
+        def entity = new Entity(new Vector2(100, Gdx.graphics.height - 100), Attributes.NO_HIT)
 
         def drawingScheme = new FontDrawingScheme(GdxEx.graphicsEx.getFont("mplus-2c-regular.fnt"))
         drawingScheme.text = "小さなカップに夢現の一粒を"

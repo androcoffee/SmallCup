@@ -14,22 +14,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.Vector2
 import groovy.transform.CompileStatic
+import org.jbox2d.common.Vec2
+import org.jbox2d.dynamics.Body
+import org.jbox2d.dynamics.Fixture
+import org.jbox2d.dynamics.contacts.ContactEdge
 
 interface IEntity {
     Vector2 getPos()
     void setPos(Vector2 pos)
-
-    Vector2 getVel()
-    void setVel(Vector2 vel)
-
-    Vector2 getAcc()
-    void setAcc(Vector2 acc)
-
-    float getSpeed()
-    void setSpeed(float speed)
-
-    float getVelDegrees()
-    void setVelDegrees(float velDegrees)
 }
 
 @CompileStatic
@@ -45,17 +37,32 @@ interface ILivingScheme {
 
 @CompileStatic
 interface IMovingScheme {
+    void updatePos(Vector2 pos)
+
     Vector2 getVel()
     void setVel(Vector2 vel)
+    float getVelX()
+    void setVelX(float vx)
+    float getVelY()
+    void setVelY(float vy)
 
-    Vector2 getAcc()
-    void setAcc(Vector2 acc)
+    void applyForce(Vector2 force)
+    void applyImpulse(Vector2 impulse)
 
     float getSpeed()
     void setSpeed(float speed)
 
     float getVelDegrees()
     void setVelDegrees(float degrees)
+
+    boolean getOnGround()
+    void updateOnGround(boolean v)
+    boolean getOnCeiling()
+    void updateOnCeiling(boolean v)
+    boolean getOnRightWall()
+    void updateOnRightWall(boolean v)
+    boolean getOnLeftWall()
+    void updateOnLeftWall(boolean v)
 
     void setupMovingScheme(Entity e)
     void updateMovingScheme(Entity e)
@@ -71,8 +78,15 @@ interface IDrawingScheme {
     boolean getVisible()
     void setVisible(boolean visible)
 
+    int getDrawingAlignment()
+    void setDrawingAlignment(int alignment)
+
     Vector2 getDrawingPos()
     void setDrawingPos(Vector2 pos)
+
+    float getZ()
+    void setZ(float z)
+
     float getScaleX()
     float getScaleY()
     void setScale(float scaleX, float scaleY)
@@ -92,29 +106,50 @@ interface IDrawingScheme {
 @CompileStatic
 class Entity implements IEntity {
     boolean done = false
+    int attribute = 0
 
     Vector2 pos = new Vector2()
-    void setPos(Vector2 p) { pos.set(p) }
+    void setPos(Vector2 p) {
+        pos.set(p)
+        if (movingScheme) movingScheme.updatePos(p)
+    }
 
-    @Delegate ILivingScheme livingScheme = null
+    float getPosX() { pos.x }
+    void setPosX(float x) {
+        pos.x = x
+        if (movingScheme) movingScheme.updatePos(pos)
+    }
+
+    float getPosY() { pos.y }
+    void setPosY(float y) {
+        pos.y = y
+        if (movingScheme) movingScheme.updatePos(pos)
+    }
+
+    @Delegate private ILivingScheme livingScheme = null
     void setLivingScheme(ILivingScheme livingScheme) {
         this.livingScheme = livingScheme
         this.livingScheme.setupLivingScheme(this)
     }
+    boolean getHasLivingScheme() { livingScheme ? true : false }
 
-    @Delegate IMovingScheme movingScheme = null
+    @Delegate private IMovingScheme movingScheme = null
     void setMovingScheme(IMovingScheme movingScheme) {
         this.movingScheme = movingScheme
         this.movingScheme.setupMovingScheme(this)
     }
+    boolean getHasMovingScheme() { movingScheme ? true : false }
 
-    @Delegate IDrawingScheme drawingScheme = null
+    @Delegate private IDrawingScheme drawingScheme = null
     void setDrawingScheme(IDrawingScheme drawingScheme) {
         this.drawingScheme = drawingScheme
         this.drawingScheme.setupDrawingScheme(this)
     }
+    boolean getHasDrawingScheme() { drawingScheme ? true : false }
 
-    Entity() {
+    Entity(Vector2 pos, int attribute) {
+        this.pos.set(pos)
+        this.attribute = attribute
     }
 
     final void addScheme(EntityScheme scheme) {
@@ -147,23 +182,14 @@ class Entity implements IEntity {
             COLOR_RGB = 8, COLOR_RGBA = 9, ALPHA = 10
 }
 
-
 @CompileStatic
-class LivingScheme implements ILivingScheme {
+abstract class LivingScheme implements ILivingScheme {
     int hp = 1
     int lastStand = -1
 
-    void setOnKilled(Closure c) {
-        onKilled = c
-    }
-
-    void setOnDying(Closure c) {
-        onDying = c
-    }
-
-    void setOnDead(Closure c) {
-        onDead = c
-    }
+    abstract void onKilled(Entity e)
+    abstract void onDying(Entity e)
+    abstract void onDead(Entity e)
 
     LivingScheme(int hp) {
         this.hp = hp
@@ -175,30 +201,36 @@ class LivingScheme implements ILivingScheme {
     void updateLivingScheme(Entity e) {
         if (hp <= 0 && lastStand == -1) {
             lastStand = 0;
-            if (onKilled) onKilled();
+            onKilled(e);
         }
 
         if (lastStand > 0) {
             lastStand--;
-            if (onDying) onDying();
+            onDying(e);
         } else if (lastStand == 0) {
-            if (onDead) onDead()
+            onDead(e)
             e.done = true
         }
     }
-
-    private Closure onKilled = null
-    private Closure onDying = null
-    private Closure onDead = null
 }
 
 @CompileStatic
 class VAMovingScheme implements IMovingScheme {
+    void updatePos(Vector2 pos) {}
+
     Vector2 vel = new Vector2(0, 0)
     void setVel(Vector2 v) { vel.set(v) }
+    float getVelX() { vel.x }
+    void setVelX(float vx) { vel.x = vx }
+    float getVelY() { vel.y }
+    void setVelY(float vy) { vel.y = vy }
 
-    Vector2 acc = new Vector2()
-    void setAcc(Vector2 a) { acc.set(a) }
+    void applyForce(Vector2 force) {
+        acc.add(force.div(GdxEx.director.spf60))
+    }
+    void applyImpulse(Vector2 impulse) {
+        acc.add(impulse)
+    }
 
     float getSpeed() { vel.len() }
     void setSpeed(float speed) {
@@ -219,11 +251,19 @@ class VAMovingScheme implements IMovingScheme {
             vel.angle()
         }
     }
-
     void setVelDegrees(float degrees) {
         vel.angle = degrees
         prevVelDegrees = degrees
     }
+
+    boolean getOnGround() { false }
+    void updateOnGround(boolean v) {}
+    boolean getOnCeiling() { false }
+    void updateOnCeiling(boolean v) {}
+    boolean getOnLeftWall() { false }
+    void updateOnLeftWall(boolean v) {}
+    boolean getOnRightWall() { false }
+    void updateOnRightWall(boolean v) {}
 
     void setupMovingScheme(Entity e) {
 
@@ -235,13 +275,106 @@ class VAMovingScheme implements IMovingScheme {
         acc.set(0, 0)
     }
 
+    private Vector2 acc = new Vector2()
     private float prevVelDegrees = 0
+}
+
+@CompileStatic
+class PhysicalMovingScheme implements IMovingScheme {
+    Body body
+
+    boolean getOnGround() { onGround }
+    void updateOnGround(boolean v) { onGround = v }
+    boolean getOnCeiling() { onCeiling }
+    void updateOnCeiling(boolean v) { onCeiling = v }
+    boolean getOnRightWall() { onRightWall }
+    void updateOnRightWall(boolean v) { onRightWall = v }
+    boolean getOnLeftWall() { onLeftWall }
+    void updateOnLeftWall(boolean v) { onLeftWall = v }
+
+    PhysicalMovingScheme(Body body) {
+        this.body = body
+    }
+
+    void updatePos(Vector2 pos) {
+        body.position.set(PhysicsEx.p2m(pos))
+    }
+
+    Vector2 getVel() { PhysicsEx.m2p(body.linearVelocity) }
+    void setVel(Vector2 v) { body.setLinearVelocity(PhysicsEx.p2m(v)) }
+
+    float getVelX() { PhysicsEx.m2p(body.linearVelocity.x) }
+    void setVelX(float vx) {
+        def vy = body.linearVelocity.y
+        body.setLinearVelocity(new Vec2(PhysicsEx.p2m(vx), vy))
+    }
+
+    float getVelY() { body.linearVelocity.y }
+    void setVelY(float vy) {
+        def vx = body.linearVelocity.x
+        body.setLinearVelocity(new Vec2(vx, PhysicsEx.p2m(vy)))
+    }
+
+    void applyForce(Vector2 force) {
+        body.applyForce(PhysicsEx.p2m(force), body.position)
+    }
+
+    void applyImpulse(Vector2 impulse) {
+        body.applyLinearImpulse(PhysicsEx.p2m(impulse), body.position)
+    }
+
+    float getSpeed() { vel.len() }
+    void setSpeed(float spd) {
+        if (this.speed == 0) {
+            def newV = new Vector2(spd, 0)
+            newV.rotate(prevVelDegrees)
+            vel = newV
+        } else {
+            def newV = vel.nor().mul(spd)
+            vel = newV
+        }
+    }
+
+    float getVelDegrees() {
+        if (speed == 0) {
+            prevVelDegrees
+        } else {
+            vel.angle()
+        }
+    }
+
+    void setVelDegrees(float degrees) {
+        def v = this.vel
+        v.angle = degrees
+        this.vel = v
+        prevVelDegrees = degrees
+    }
+
+    void setupMovingScheme(Entity e) {
+        body.userData = e
+        body.position.set(PhysicsEx.p2m(e.pos))
+        body.fixtureList.each { Fixture f ->
+            f.filterData.categoryBits = e.attribute as short
+        }
+    }
+
+    void updateMovingScheme(Entity e) {
+        e.pos = PhysicsEx.m2p(body.position)
+    }
+
+    private float prevVelDegrees = 0
+    private boolean onGround = false
+    private boolean onCeiling = false
+    private boolean onRightWall = false
+    private boolean onLeftWall = false
 }
 
 @CompileStatic
 abstract class DrawingScheme implements IDrawingScheme {
     boolean visible = true
     boolean followingCamera = false
+    float z = 0.0f
+    int drawingAlignment = CENTER
 
     abstract void onSetupDrawingScheme(Entity e)
     abstract void onUpdateDrawingScheme(Entity e)
@@ -270,6 +403,8 @@ abstract class DrawingScheme implements IDrawingScheme {
 
         scheme
     }
+
+    static final int LEFT_BOTTOM = 0, CENTER = 1
 }
 
 @CompileStatic
@@ -281,11 +416,21 @@ class SpriteDrawingScheme extends DrawingScheme {
     }
 
     Vector2 getDrawingPos() {
-        new Vector2(sprite.x, sprite.y)
+        def offset = alignmentOffset
+        new Vector2(sprite.x + offset.x, sprite.y + offset.y)
     }
 
     void setDrawingPos(Vector2 pos) {
-        sprite.setPosition(pos.x, pos.y)
+        def offset = alignmentOffset
+        sprite.setPosition(pos.x - offset.x, pos.y - offset.y)
+    }
+
+    private Vector2 getAlignmentOffset() {
+        if (drawingAlignment == DrawingScheme.CENTER) {
+            return new Vector2(sprite.width / 2.0f as float, sprite.height / 2.0f as float)
+        } else {
+            return new Vector2()
+        }
     }
 
     float getDrawingDegrees() {
@@ -297,7 +442,7 @@ class SpriteDrawingScheme extends DrawingScheme {
     }
 
     void onSetupDrawingScheme(Entity e) {
-        sprite.setPosition(e.pos.x, e.pos.y)
+        drawingPos.set(e.pos)
     }
 
     void onUpdateDrawingScheme(Entity e) {
