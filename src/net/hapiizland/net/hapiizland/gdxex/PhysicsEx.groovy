@@ -8,8 +8,11 @@
 
 package net.hapiizland.net.hapiizland.gdxex
 
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import groovy.transform.CompileStatic
+import org.jbox2d.collision.shapes.PolygonShape
+import org.jbox2d.collision.shapes.Shape
 import org.jbox2d.common.Vec2
 import org.jbox2d.dynamics.World
 
@@ -66,6 +69,27 @@ class PhysicsEx {
 
     static float m2pRate = 32.0f
     private static void setM2pRate(float rate) { m2pRate = rate }
+
+    final static Shape createHalfCircleShape(float radius, float startDegrees, float width) {
+        int intWidth = width as int
+        int count = intWidth.intdiv(10) + 1
+        float mod = width - (count-1) * 10
+
+        Vec2[] vertices = (0..<count).collect { int i ->
+            float rad = MathUtils.degRad * i * 10
+
+            if (i == count-1) {
+                rad = MathUtils.degRad * ((i-1) * 10 + mod)
+            }
+
+            new Vec2(Math.cos(rad) as float, Math.sin(rad) as float)
+        } as Vec2[]
+
+        PolygonShape shape = new PolygonShape()
+        shape.set(vertices, vertices.size())
+
+        shape
+    }
 }
 
 interface IPhycsScheme {

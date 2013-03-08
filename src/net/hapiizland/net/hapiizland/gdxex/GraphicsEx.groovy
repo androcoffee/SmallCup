@@ -56,14 +56,16 @@ class GraphicsEx {
         textures[filename]
     }
 
-    void beginDrawing() {
+    void clearBuffer() {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+    }
 
+    void beginBatchDrawing() {
         batch.begin()
         batch.projectionMatrix = GdxEx.cameraEx.camera.combined
     }
 
-    void endDrawing() {
+    void endBatchDrawing() {
         batch.end()
     }
 

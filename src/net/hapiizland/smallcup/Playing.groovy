@@ -30,6 +30,7 @@ import net.hapiizland.net.hapiizland.gdxex.VAMovingScheme
 import net.hapiizland.net.hapiizland.gdxex.Vector2Ex
 
 import net.hapiizland.smallcup.entities.Bullet
+import org.jbox2d.collision.shapes.CircleShape
 import org.jbox2d.collision.shapes.PolygonShape
 import org.jbox2d.dynamics.Body
 import org.jbox2d.dynamics.BodyDef
@@ -43,9 +44,9 @@ class Playing implements Screen {
 
     @Override
     void show() {
-        GdxEx.stageEx.loadStage("Tutorial.oel")
+        GdxEx.stageEx.loadStage("home.tmx")
 
-        def player = Player.createPlayer(new Vector2(160, 860))
+        def player = Player.createPlayer(new Vector2(160, 200))
         GdxEx.entityEx.addEntity(player)
         GdxEx.entityEx.addEntity(Player.createPlayerInfo(player))
 
@@ -110,12 +111,12 @@ class Player {
         BodyDef bodyDef = new BodyDef()
         bodyDef.position.set(PhysicsEx.p2m(pos))
         bodyDef.type = BodyType.DYNAMIC
-        bodyDef.fixedRotation = true
+        //bodyDef.fixedRotation = true
 
         Body body = GdxEx.physicsEx.createBody(bodyDef)
         FixtureDef fixtureDef = new FixtureDef()
-        PolygonShape shape = new PolygonShape()
-        shape.setAsBox(PhysicsEx.p2m(28.0f / 2), PhysicsEx.p2m(28.0f / 2))
+        CircleShape shape = new CircleShape()
+        shape.m_radius = PhysicsEx.p2m(28.0f / 2)
         fixtureDef.shape = shape
         fixtureDef.density = 1.0f
         fixtureDef.friction = 0.4f
@@ -132,7 +133,7 @@ class Player {
 
             @Override
             void updateScheme(Entity e) {
-                //e.drawingDegrees += 1.0f
+                e.drawingDegrees = MathUtils.radDeg * body.angle
 
                 if (GdxEx.inputEx.isKeyPressed(Input.Keys.LEFT) && e.velX > -300.0f) {
                     if (e.onGround) {

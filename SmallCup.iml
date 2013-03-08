@@ -8,10 +8,10 @@
     <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="groovy-2.1.1" level="application" />
-    <orderEntry type="library" name="libgdx" level="application" />
     <orderEntry type="library" name="universal-tween-engine" level="application" />
     <orderEntry type="library" name="jbox2d" level="application" />
     <orderEntry type="library" name="slf4j" level="application" />
+    <orderEntry type="library" name="libgdx-nightly-build" level="application" />
   </component>
 </module>
 

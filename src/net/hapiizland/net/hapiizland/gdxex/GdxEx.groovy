@@ -60,12 +60,15 @@ class GdxEx {
     }
 
     static void draw() {
-        graphicsEx.beginDrawing()
+        graphicsEx.clearBuffer()
+        graphicsEx.beginBatchDrawing()
         entityEx.draw()
-        graphicsEx.endDrawing()
+        graphicsEx.endBatchDrawing()
+        stageEx.draw()
     }
 
     static void dispose() {
+        stageEx.dispose()
         graphicsEx.dispose()
         physicsEx.dispose()
     }

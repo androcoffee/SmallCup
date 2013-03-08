@@ -129,7 +129,7 @@ class StageScheme implements IStageScheme {
                     def entity = new Entity(new Vector2(x * chipSize, y * chipSize), Attributes.BLOCKS)
                     entity.drawingScheme = new SpriteDrawingScheme(new Sprite(texture, 0, 0, 32, 32))
                     entity.drawingAlignment = DrawingScheme.LEFT_BOTTOM
-                    entity.scale = 2.0f
+                    //entity.scale = 2.0f
 
                     GdxEx.entityEx.addEntity(entity)
                 }
@@ -139,7 +139,7 @@ class StageScheme implements IStageScheme {
 
     String getBlockLayer() { "Blocks" }
     String getStagePath() { "data/stages/" }
-    int getChipSize() { 64 }
+    int getChipSize() { 32 }
 }
 
 class Attributes {
