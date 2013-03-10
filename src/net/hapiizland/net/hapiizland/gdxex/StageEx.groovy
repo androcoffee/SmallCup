@@ -120,8 +120,14 @@ class StageEx {
                     case 1:
                         createBlock(x, y, cpy)
                         break
-                    case 2..15:
+                    case 2..16:
                         createSlope(x, y, cpy[y][x])
+                        break
+                    case [18, 19, 26, 27]:
+                        createArc(x, y, cpy[y][x])
+                        break
+                    case [20, 21, 28, 29]:
+                        createInversedArc(x, y, cpy[y][x])
                         break
                     default:
                         break
@@ -141,7 +147,7 @@ class StageEx {
             int localY = y + blockHeight
             int left = x
 
-            int right = cpy[localY].findIndexOf(x) { int v -> v == 0 }
+            int right = cpy[localY].findIndexOf(x) { int v -> v != 1 }
             if (right == -1) {
                 right = width
             }
@@ -169,6 +175,7 @@ class StageEx {
         BodyDef bodyDef = new BodyDef()
         bodyDef.type = BodyType.STATIC
         bodyDef.position.set(PhysicsEx.p2m(new Vector2(x * chipSize + boxWidth as float, y * chipSize + boxHeight as float)))
+        bodyDef.userData = new BlockInfo(type: BlockInfo.BLOCK)
         Body body = GdxEx.physicsEx.createBody(bodyDef)
 
         PolygonShape boxShape = new PolygonShape()
@@ -189,6 +196,7 @@ class StageEx {
         BodyDef bodyDef = new BodyDef()
         bodyDef.type = BodyType.STATIC
         bodyDef.position.set(PhysicsEx.p2m(new Vector2(x * chipSize + half as float, y * chipSize + half as float)))
+        bodyDef.userData = new BlockInfo(type: BlockInfo.SLOPE)
         Body body = GdxEx.physicsEx.createBody(bodyDef)
 
         FixtureDef fixtureDef = new FixtureDef()
@@ -269,6 +277,88 @@ class StageEx {
         body.createFixture(fixtureDef)
     }
 
+    private void createArc(int x, int y, int id) {
+        float meterRadius = PhysicsEx.p2m(chipSize)
+        BodyDef bodyDef = new BodyDef()
+        bodyDef.type = BodyType.STATIC
+        bodyDef.userData = new BlockInfo(type: BlockInfo.ARC)
+        FixtureDef fixtureDef = new FixtureDef()
+        fixtureDef.friction = 0.4f
+
+        float startDegrees = 0
+        int offsetX = 0
+        int offsetY = 0
+
+        switch (id) {
+            case 18:
+                offsetX = 1
+                startDegrees = 90
+                break
+            case 19:
+                break
+            case 26:
+                offsetX = 1
+                offsetY = 1
+                startDegrees = 180
+                break
+            case 27:
+                offsetY = 1
+                startDegrees = 270
+                break
+            default:
+                break
+        }
+
+        bodyDef.position.set(PhysicsEx.p2m(new Vector2((x+offsetX) * chipSize as float, (y+offsetY) * chipSize as float)))
+        Body body = GdxEx.physicsEx.createBody(bodyDef)
+
+        PhysicsEx.createHalfCircleShapes(meterRadius, startDegrees, 90).each { PolygonShape shape ->
+            fixtureDef.shape = shape
+            body.createFixture(fixtureDef)
+        }
+    }
+
+    private void createInversedArc(int x, int y, int id) {
+        float meterRadius = PhysicsEx.p2m(chipSize)
+        BodyDef bodyDef = new BodyDef()
+        bodyDef.type = BodyType.STATIC
+        bodyDef.userData = new BlockInfo(type: BlockInfo.INVERSED_ARC)
+        FixtureDef fixtureDef = new FixtureDef()
+        fixtureDef.friction = 0.4f
+
+        float startDegrees = 0
+        int offsetX = 0
+        int offsetY = 0
+
+        switch (id) {
+            case 20:
+                offsetX = 1
+                startDegrees = 90
+                break
+            case 21:
+                break
+            case 28:
+                offsetX = 1
+                offsetY = 1
+                startDegrees = 180
+                break
+            case 29:
+                offsetY = 1
+                startDegrees = 270
+                break
+            default:
+                break
+        }
+
+        bodyDef.position.set(PhysicsEx.p2m(new Vector2((x+offsetX) * chipSize as float, (y+offsetY) * chipSize as float)))
+        Body body = GdxEx.physicsEx.createBody(bodyDef)
+
+        PhysicsEx.createInversedHalfCircleShapes(meterRadius, startDegrees, 90).each { PolygonShape shape ->
+            fixtureDef.shape = shape
+            body.createFixture(fixtureDef)
+        }
+    }
+
     private void createEntities(Stage stage, IStageScheme scheme) {
         stage.allEntities.values().each { List<Map<String, Object>> eList ->
             eList.each { Map<String, Object> e ->
@@ -288,4 +378,10 @@ interface IStageScheme {
     String getStagePath()
     int getChipSize()
     Entity createEntity(Stage stage, Map<String, Object> entity)
+}
+
+class BlockInfo {
+    int type = BLOCK
+
+    final static int BLOCK = 0, SLOPE = 1, ARC = 2, INVERSED_ARC = 3
 }

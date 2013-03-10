@@ -61,10 +61,10 @@ class GdxEx {
 
     static void draw() {
         graphicsEx.clearBuffer()
+        stageEx.draw()
         graphicsEx.beginBatchDrawing()
         entityEx.draw()
         graphicsEx.endBatchDrawing()
-        stageEx.draw()
     }
 
     static void dispose() {

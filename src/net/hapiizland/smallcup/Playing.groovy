@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import groovy.transform.CompileStatic
+import net.hapiizland.net.hapiizland.gdxex.BlockInfo
 import net.hapiizland.net.hapiizland.gdxex.Entity
 import net.hapiizland.net.hapiizland.gdxex.EntityScheme
 import net.hapiizland.net.hapiizland.gdxex.FontDrawingScheme
@@ -32,10 +33,16 @@ import net.hapiizland.net.hapiizland.gdxex.Vector2Ex
 import net.hapiizland.smallcup.entities.Bullet
 import org.jbox2d.collision.shapes.CircleShape
 import org.jbox2d.collision.shapes.PolygonShape
+import org.jbox2d.common.Vec2
 import org.jbox2d.dynamics.Body
 import org.jbox2d.dynamics.BodyDef
 import org.jbox2d.dynamics.BodyType
 import org.jbox2d.dynamics.FixtureDef
+import org.jbox2d.dynamics.contacts.Contact
+import org.jbox2d.dynamics.contacts.ContactEdge
+import org.jbox2d.dynamics.joints.Joint
+import org.jbox2d.dynamics.joints.WeldJoint
+import org.jbox2d.dynamics.joints.WeldJointDef
 
 @CompileStatic
 class Playing implements Screen {
@@ -46,7 +53,7 @@ class Playing implements Screen {
     void show() {
         GdxEx.stageEx.loadStage("home.tmx")
 
-        def player = Player.createPlayer(new Vector2(160, 200))
+        def player = Player.createPlayer(new Vector2(200, 250))
         GdxEx.entityEx.addEntity(player)
         GdxEx.entityEx.addEntity(Player.createPlayerInfo(player))
 
@@ -111,65 +118,106 @@ class Player {
         BodyDef bodyDef = new BodyDef()
         bodyDef.position.set(PhysicsEx.p2m(pos))
         bodyDef.type = BodyType.DYNAMIC
+        bodyDef.angularDamping = 0.5f
         //bodyDef.fixedRotation = true
 
         Body body = GdxEx.physicsEx.createBody(bodyDef)
         FixtureDef fixtureDef = new FixtureDef()
         CircleShape shape = new CircleShape()
         shape.m_radius = PhysicsEx.p2m(28.0f / 2)
+        //shape.setAsBox(PhysicsEx.p2m(8.0f / 2), PhysicsEx.p2m(8.0f / 2))
         fixtureDef.shape = shape
         fixtureDef.density = 1.0f
-        fixtureDef.friction = 0.4f
+        fixtureDef.friction = 1.0f
         body.createFixture(fixtureDef)
 
         player.movingScheme = new PhysicalMovingScheme(body)
 
         player.addScheme(new EntityScheme() {
-            boolean doubleJumped = false
-
             @Override
             void setupScheme(Entity e) {
             }
 
             @Override
             void updateScheme(Entity e) {
-                e.drawingDegrees = MathUtils.radDeg * body.angle
+                for (ContactEdge contactEdge = e.body.getContactList(); contactEdge; contactEdge = contactEdge.next) {
+                    Contact contact = contactEdge.contact
 
-                if (GdxEx.inputEx.isKeyPressed(Input.Keys.LEFT) && e.velX > -300.0f) {
-                    if (e.onGround) {
-                        e.applyForce(new Vector2(-300.0f, 0.0f))
-                    } else {
-                        e.applyForce(new Vector2(-150.0f, 0.0f))
+                    if (contact.touching) {
+                        e.drawingDegrees = PhysicsEx.m2p(contact.manifold.localNormal).angle() - 90.0f
+                        break
                     }
                 }
-                if (GdxEx.inputEx.isKeyPressed(Input.Keys.RIGHT) && e.velX < 300.0f) {
+
+                boolean goLeft = GdxEx.inputEx.isKeyPressed(Input.Keys.LEFT)
+                boolean goRight = GdxEx.inputEx.isKeyPressed(Input.Keys.RIGHT)
+                boolean goDown = GdxEx.inputEx.isKeyPressed(Input.Keys.DOWN)
+
+                float airForce = 130.0f
+                float wallTorque = 2.0f
+                float groundForce = 200.0f
+                float groundTorque = 3.0f
+                float jumpPower = 180.0f
+
+                if (goRight) {
                     if (e.onGround) {
-                        e.applyForce(new Vector2(300.0f, 0.0f))
+                        e.body.applyTorque(-groundTorque)
+                        e.applyForce(new Vector2(groundForce, 0))
                     } else {
-                        e.applyForce(new Vector2(150.0f, 0.0f))
+                        if (e.onRightWall) {
+                            e.applyForce(new Vector2(airForce, 0))
+                            e.body.applyTorque(-wallTorque)
+                        }
+                        e.applyForce(new Vector2(airForce, 0))
+                    }
+                } else if (goLeft) {
+                    if (e.onGround) {
+                        e.body.applyTorque(groundTorque)
+                        e.applyForce(new Vector2(-groundForce, 0))
+                    } else {
+                        if (e.onLeftWall) {
+                            e.applyForce(new Vector2(-airForce, 0))
+                            e.body.applyTorque(wallTorque)
+                        }
+                        e.applyForce(new Vector2(-airForce, 0))
+                    }
+                } else if (goDown) {
+                    if (e.onRightWall) {
+                        e.body.applyTorque(wallTorque * 2.0f as float)
+                        e.applyForce(new Vector2(airForce, 0))
+                    } else if (e.onLeftWall) {
+                        e.body.applyTorque(-wallTorque *  2.0f as float)
+                        e.applyForce(new Vector2(-airForce, 0))
+                    }
+                }
+
+                if (!goLeft && !goRight && e.onGround) {
+                    e.body.linearDamping = 2.0f
+                    e.body.angularDamping = 2.0f
+                } else {
+                    e.body.linearDamping = 0.7f
+                    e.body.angularDamping = 0.7f
+                }
+
+                float dashPower = 50.0f
+                if (GdxEx.inputEx.isKeyDown(Input.Keys.X)) {
+                    if (e.onGround) {
+                        e.applyImpulse(new Vector2(dashPower, 0))
                     }
                 }
 
                 if (GdxEx.inputEx.isKeyDown(Input.Keys.Z)) {
                     if (e.onGround) {
-                        e.velY = 200.0f
-                    } else if (e.onRightWall && GdxEx.inputEx.isKeyPressed(Input.Keys.RIGHT)) {
-                        e.vel = new Vector2(-200.0f, 200.0f)
-                    } else if (e.onLeftWall && GdxEx.inputEx.isKeyPressed(Input.Keys.LEFT)) {
-                        e.vel = new Vector2(200.0f, 200.0f)
-                    } else if (!this.doubleJumped) {
-                        e.speed = 400.0f
-                        e.velDegrees = this.keyToDegrees()
-                        this.doubleJumped = true
+                        e.applyImpulse(new Vector2(0, jumpPower))
+                    } else if (e.onRightWall) {
+                        e.applyImpulse(new Vector2(-jumpPower / 2.0f as float, jumpPower * 1.732f / 2.0f as float))
+                    } else if (e.onLeftWall) {
+                        e.applyImpulse(new Vector2(jumpPower / 2.0f as float, jumpPower * 1.732f / 2.0f as float))
                     }
                 }
 
-                if (e.onGround) this.doubleJumped = false
-
-                if (GdxEx.inputEx.isKeyPressed(Input.Keys.I)) {
-                    e.scale = e.scaleX + 0.1f
-                } else if (GdxEx.inputEx.isKeyPressed(Input.Keys.O)) {
-                    e.scale = e.scaleX - 0.1f
+                if (!e.onGround && !e.onRightWall && !e.onLeftWall && !e.onCeiling) {
+                    e.body.angularVelocity = 0.0f
                 }
 
                 if (GdxEx.inputEx.isMouseDown(Input.Buttons.LEFT)) {
@@ -244,8 +292,7 @@ class Player {
             @Override
             void updateScheme(Entity e) {
                 fontDrawingScheme.text = "pos = ${(int)player.posX}, ${(int)player.posY}\n" +
-                        "G = ${player.onGround}, C = ${player.onCeiling}," +
-                        "R = ${player.onRightWall}, L = ${player.onLeftWall}"
+                        "G = $player.onGround"
             }
         })
 

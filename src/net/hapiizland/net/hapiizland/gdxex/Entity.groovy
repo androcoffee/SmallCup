@@ -64,6 +64,8 @@ interface IMovingScheme {
     boolean getOnLeftWall()
     void updateOnLeftWall(boolean v)
 
+    Body getBody()
+
     void setupMovingScheme(Entity e)
     void updateMovingScheme(Entity e)
 }
@@ -265,6 +267,8 @@ class VAMovingScheme implements IMovingScheme {
     boolean getOnRightWall() { false }
     void updateOnRightWall(boolean v) {}
 
+    Body getBody() { null }
+
     void setupMovingScheme(Entity e) {
 
     }
@@ -349,6 +353,8 @@ class PhysicalMovingScheme implements IMovingScheme {
         this.vel = v
         prevVelDegrees = degrees
     }
+
+    Body getBody() { body }
 
     void setupMovingScheme(Entity e) {
         body.userData = e

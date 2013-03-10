@@ -70,32 +70,8 @@ class DirectorScheme implements IDirectorScheme {
                     void endContact(Contact contact) {
                     }
 
-                    @Override void preSolve(Contact contact, Manifold oldManifold) {
-                        Entity entityA = contact.fixtureA.body.userData as Entity
-                        Entity entityB = contact.fixtureB.body.userData as Entity
-                        def normal = contact.worldManifold.normal //normal vector is from A to B
-
-                        if (entityA && entityA.class == Entity) {
-                            if (normal.y >= 0.5f) entityA.updateOnCeiling(true)
-                            if (normal.y <= -0.5f) entityA.updateOnGround(true)
-                            if (normal.x >= 0.5f) entityA.updateOnRightWall(true)
-                            if (normal.x <= -0.5) entityA.updateOnLeftWall(true)
-                        }
-                        if (entityB && entityB.class == Entity) {
-                            /*if (entityB.hasMovingScheme) {
-                                entityB.updateOnGround(false)
-                                entityB.updateOnCeiling(false)
-                                entityB.updateOnRightWall(false)
-                                entityB.updateOnLeftWall(false)
-                            }*/
-                            if (normal.y >= 0.5f) entityB.updateOnGround(true)
-                            if (normal.y <= -0.5f) entityB.updateOnCeiling(true)
-                            if (normal.x >= 0.5f) entityB.updateOnLeftWall(true)
-                            if (normal.x <= -0.5) entityB.updateOnRightWall(true)
-                        }
-                    }
-                    @Override void postSolve(Contact contact, ContactImpulse impulse) {
-                    }
+                    @Override void preSolve(Contact contact, Manifold oldManifold) {}
+                    @Override void postSolve(Contact contact, ContactImpulse impulse) {}
                 }
             }
         }

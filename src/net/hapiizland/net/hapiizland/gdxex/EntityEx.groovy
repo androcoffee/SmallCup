@@ -72,17 +72,18 @@ class EntityEx {
 
         for (Contact contact = GdxEx.physicsEx.getContactList(); contact; contact = contact.next) {
             if (contact.touching) {
-                Entity entityA = contact.fixtureA.body.userData as Entity
-                Entity entityB = contact.fixtureB.body.userData as Entity
+                Object userDataA = contact.fixtureA.body.userData
+                Object userDataB = contact.fixtureB.body.userData
                 def normal = contact.manifold.localNormal //normal vector is from A to B
 
-                if (entityA && entityA.class == Entity) {
+                if (userDataA && userDataA.class == Entity) {
                     //if (normal.y >= 0.5f) entityA.updateOnCeiling(true)
                     //if (normal.y <= -0.5f) entityA.updateOnGround(true)
                     //if (normal.x >= 0.5f) entityA.updateOnRightWall(true)
                     //if (normal.x <= -0.5) entityA.updateOnLeftWall(true)
                 }
-                if (entityB && entityB.class == Entity) {
+                if (userDataB && userDataB.class == Entity) {
+                    Entity entityB = userDataB as Entity
                     if (normal.y >= 0.5f) entityB.updateOnGround(true)
                     if (normal.y <= -0.5f) entityB.updateOnCeiling(true)
                     if (normal.x >= 0.5f) entityB.updateOnLeftWall(true)

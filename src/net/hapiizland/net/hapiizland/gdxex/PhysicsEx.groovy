@@ -14,6 +14,9 @@ import groovy.transform.CompileStatic
 import org.jbox2d.collision.shapes.PolygonShape
 import org.jbox2d.collision.shapes.Shape
 import org.jbox2d.common.Vec2
+import org.jbox2d.dynamics.Body
+import org.jbox2d.dynamics.BodyDef
+import org.jbox2d.dynamics.FixtureDef
 import org.jbox2d.dynamics.World
 
 @CompileStatic
@@ -70,25 +73,53 @@ class PhysicsEx {
     static float m2pRate = 32.0f
     private static void setM2pRate(float rate) { m2pRate = rate }
 
-    final static Shape createHalfCircleShape(float radius, float startDegrees, float width) {
+    final static List<PolygonShape> createHalfCircleShapes(float radius, float startDegrees, float width) {
+        List<Vec2> vertices = halfCircleVertices(radius, startDegrees, width)
+
+        (0..<(vertices.size()-1)).collect { int i ->
+            Vec2[] tri = [new Vec2(), vertices[i], vertices[i+1]] as Vec2[]
+            PolygonShape shape = new PolygonShape()
+            shape.set(tri, tri.size())
+
+            shape
+        }.toList() as List<PolygonShape>
+    }
+
+    final static List<PolygonShape> createInversedHalfCircleShapes(float radius, float startDegrees, float width) {
+        List<Vec2> vertices = halfCircleVertices(radius, startDegrees, width)
+
+        (0..<(vertices.size()-1)).collect { int i ->
+            Vec2 v1 = vertices[i+1]
+            Vec2 v2 = vertices[i]
+
+            int flagX = v1.x > 0 ? 1 : -1
+            int flagY = v1.y > 0 ? 1 : -1
+
+            if (v1.x.abs() < 0.01f) flagX = v2.x > 0 ? 1 : -1
+            if (v1.y.abs() < 0.01f) flagY = v2.y > 0 ? 1 : -1
+
+            Vec2 origin = new Vec2(flagX * radius, flagY * radius)
+
+            Vec2[] tri = [origin, vertices[i+1], vertices[i]] as Vec2[]
+
+            PolygonShape shape = new PolygonShape()
+            shape.set(tri, tri.size())
+
+            shape
+        }.toList() as List<PolygonShape>
+    }
+
+    final static private List<Vec2> halfCircleVertices(float radius, float startDegrees, float width) {
         int intWidth = width as int
-        int count = intWidth.intdiv(10) + 1
-        float mod = width - (count-1) * 10
+        int count = intWidth.intdiv(10) as int
 
-        Vec2[] vertices = (0..<count).collect { int i ->
-            float rad = MathUtils.degRad * i * 10
+        (0..count).collect { int i ->
+            float rad = MathUtils.degRad * (i * 10.0f + startDegrees)
 
-            if (i == count-1) {
-                rad = MathUtils.degRad * ((i-1) * 10 + mod)
-            }
-
-            new Vec2(Math.cos(rad) as float, Math.sin(rad) as float)
-        } as Vec2[]
-
-        PolygonShape shape = new PolygonShape()
-        shape.set(vertices, vertices.size())
-
-        shape
+            float x = radius * Math.cos(rad) as float
+            float y = radius * Math.sin(rad) as float
+            new Vec2(x, y)
+        }.toList() as List<Vec2>
     }
 }
 
